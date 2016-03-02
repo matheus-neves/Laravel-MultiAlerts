@@ -12,6 +12,6 @@ class LaravelMultialerts
      */
     public function echoPhrase($phrase)
     {
-        return $phrase;
+        return 'testing...';
     }
 }
