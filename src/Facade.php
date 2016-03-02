@@ -2,9 +2,9 @@
 
 namespace GSMeira\LaravelMultialerts;
 
-use Illuminate\Support\Facades\Facade;
+use Illuminate\Support\Facades\Facade as BaseFacade;
 
-class LaravelMultialertsFacade extends Facade
+class Facade extends BaseFacade
 {
     /**
      * Get the binding in the IoC container

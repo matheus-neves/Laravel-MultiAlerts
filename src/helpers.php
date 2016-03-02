@@ -1,11 +1,17 @@
 <?php
 
-namespace GSMeira\LaravelMultialerts;
+use GSMeira\LaravelMultialerts\LaravelMultialerts;
 
 if (! function_exists('multialerts'))
 {
-    function multialerts()
+    /**
+     * Returns an instance of Multialerts.
+     *
+     * @param string $type
+     * @return LaravelMultialerts
+     */
+    function multialerts($type = 'default')
     {
-        return 'testando o helper do multialerts';
+        return app(LaravelMultialerts::class, [ $type ]);
     }
 }
