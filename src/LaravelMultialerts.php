@@ -52,57 +52,7 @@ class LaravelMultialerts
         $this->level = '';
         $this->fields = [];
         $this->sessionKey = config('alerts.session_key', 'multialerts');
-        $this->alerts = $this->getAlerts();
-    }
-
-    /**
-     * Returns the existing alerts.
-     *
-     * @return array
-     */
-    private function getAlerts()
-    {
-        if (Session::has($this->sessionKey))
-        {
-            return Session::get($this->sessionKey);
-        }
-
-        return [];
-    }
-
-    /**
-     * Makes the alerts visible only in the current request.
-     *
-     * @return void
-     */
-    public function toRequest()
-    {
-        if (Session::has($this->sessionKey))
-        {
-            view()->share('requestAlerts', $this->alerts);
-
-            Session::flash($this->sessionKey, []);
-        }
-    }
-
-    /**
-     * Adds the message and the fields defined in the session.
-     *
-     * @return void
-     */
-    protected function persist()
-    {
-        // Build the message.
-        $this->alerts[$this->type][$this->level][] = $this->fields;
-
-        // Serializes the array and remove duplicate messages.
-        $unique = array_unique(array_map('serialize', $this->alerts[$this->type][$this->level]));
-
-        // Intersects, returning the unique alerts.
-        $this->alerts[$this->type][$this->level] = array_intersect_key($this->alerts[$this->type][$this->level], $unique);
-
-        // Refresh the session with the new unique alerts.
-        Session::flash($this->sessionKey, $this->alerts);
+        $this->alerts = Session::get($this->sessionKey) ? Session::get($this->sessionKey) : [];
     }
 
     /**
@@ -128,6 +78,41 @@ class LaravelMultialerts
         $this->fields += [ $key => trans($message, $placeholders) ];
 
         return $this;
+    }
+
+    /**
+     * Makes the alerts visible only in the current request.
+     *
+     * @return void
+     */
+    public function toRequest()
+    {
+        if (Session::has($this->sessionKey))
+        {
+            view()->share('requestAlerts', $this->alerts);
+
+            Session::flash($this->sessionKey, []);
+        }
+    }
+
+    /**
+     * Adds in the session the message and the custom fields.
+     *
+     * @return void
+     */
+    public function put()
+    {
+        // Build the message.
+        $this->alerts[$this->type][$this->level][] = $this->fields;
+
+        // Serializes the array and remove duplicate messages.
+        $unique = array_unique(array_map('serialize', $this->alerts[$this->type][$this->level]));
+
+        // Intersects, returning the unique alerts.
+        $this->alerts[$this->type][$this->level] = array_intersect_key($this->alerts[$this->type][$this->level], $unique);
+
+        // Refresh the session with the new unique alerts.
+        Session::flash($this->sessionKey, $this->alerts);
     }
 
     /**
@@ -192,16 +177,6 @@ class LaravelMultialerts
         $this->fields += [ 'message' => trans($message, $placeholders) ];
 
         return $this;
-    }
-
-    /**
-     * Persist in the session the alerts after all fields have been defined.
-     *
-     * @return void
-     */
-    public function put()
-    {
-        $this->persist($this->type);
     }
 
     /**

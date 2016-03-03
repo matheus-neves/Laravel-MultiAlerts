@@ -22,8 +22,6 @@ We accept contributions via Pull Requests on [Github](https://github.com/gsmeira
 
 ## Running Tests
 
-``` bash
-$ composer test
-```
+Soon...
 
 **Happy coding**!

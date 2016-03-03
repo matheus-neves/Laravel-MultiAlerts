@@ -19,10 +19,7 @@ $ composer require gsmeira/laravel-multialerts
 
 ## Usage
 
-``` php
-$skeleton = new League\Skeleton();
-echo $skeleton->echoPhrase('Hello, League!');
-```
+Soon...
 
 ## Change log
 
@@ -30,9 +27,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 
 ## Testing
 
-``` bash
-$ composer test
-```
+Soon...
 
 ## Contributing
 
