@@ -1,9 +1,24 @@
 <?php
 
+/*
+ * This file is part of Laravel Multialerts.
+ *
+ * (c) Gustavo Meireles <gustavo@gsmeira.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace GSMeira\LaravelMultialerts;
 
 use Illuminate\Support\Facades\Session;
 
+/**
+ * This is the Laravel Multialerts main class.
+ *
+ * @author Gustavo Meireles <gustavo@gsmeira.com>
+ * @package GSMeira\LaravelMultialerts
+ */
 class LaravelMultialerts
 {
     /**
@@ -42,7 +57,7 @@ class LaravelMultialerts
     private $sessionKey;
 
     /**
-     * Multialerts class constructor.
+     * Laravel Multialerts class constructor.
      *
      * @param string $type
      */
