@@ -22,6 +22,6 @@ We accept contributions via Pull Requests on [Github](https://github.com/gsmeira
 
 ## Running Tests
 
-Soon...
+soon...
 
 **Happy coding**!

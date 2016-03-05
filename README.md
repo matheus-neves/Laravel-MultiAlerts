@@ -11,15 +11,45 @@ A package for managing multiple types and levels of alerts in Laravel.
 
 ## Install
 
-Via Composer
+To get the latest version of Laravel Multialerts, simply require the project using Composer:
 
 ``` bash
 $ composer require gsmeira/laravel-multialerts
 ```
 
+Instead, you may of course manually update your require block and run `composer update` if you so choose:
+
+``` bash
+{
+    "require": {
+        "gsmeira/laravel-multialerts": "^0.0.1"
+    }
+}
+```
+
+Once Laravel Multialerts is installed, you need to register the service provider. Open up `config/app.php` and add the following to the providers key.
+
+``` php
+'GSMeira\LaravelMultialerts\ServiceProvider'
+```
+
+You can register the Laravel Multialerts facade in the aliases key of your config/app.php file if you like.
+
+``` php
+'Multialerts' => 'GSMeira\LaravelMultialerts\Facade'
+```
+
+In the last step of the installation, you must publish the configuration file.
+
+``` bash
+$ php artisan vendor:publish
+```
+
+This will create a `config/multialerts.php` file in your app that you can modify to set your configuration. Also, make sure you check for changes to the original config file in this package between releases.
+
 ## Usage
 
-Soon...
+soon...
 
 ## Change log
 
@@ -27,7 +57,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 
 ## Testing
 
-Soon...
+soon...
 
 ## Contributing
 
