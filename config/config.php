@@ -30,8 +30,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | Name of the variable that will be used to store the alerts in the view.
-    | This option can be changed if it conflicts with any other session key
-    | or if you want to use a different name.
+    | This option can be changed if it conflicts with any other variable
+    | names of your views, or if you want to use a different name.
     |
     */
 

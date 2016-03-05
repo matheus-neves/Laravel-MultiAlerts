@@ -54,19 +54,19 @@ Just call the helper function `multialerts()` and start chaining.
 An basic success alert.
 
 ``` php
-multialerts()->success('The user was successfully created.')->put();
+multialerts()->success('The user was successfully created.')->put()
 ```
 
-You can put the text alerts in your language files.
+You can put the alert message in your language files.
 
 ``` php
-multialerts()->success('users.successfully_created')->put();
+multialerts()->success('users.successfully_created')->put()
 ```
 
 If the alert message have placeholders, you can pass then just like in the default Laravel `trans()` helper function (actually, behind the scenes the `trans()` helper function is called). With this little abstraction, we get a clean and more readable code.
 
 ``` php
-multialerts()->success('users.successfully_created', [ $user->name ])->put();
+multialerts()->success('users.successfully_created', [ $user->name ])->put()
 ```
 
 That's it! You can call `multialerts()` many times as needed to show all the alerts you want.
@@ -78,7 +78,7 @@ Available levels: `success`, `error`, `warning`, `info`
 A very nice feature of Laravel Multialerts is the possibility of adding custom fields to your alert. (By default Laravel Multialerts have one field: `message`)
 
 ``` php
-multialerts()->error('An unexpected error occurred during the creation process!')->tip('Please, try again later. If the problem persists contact the site administrator.')->put();
+multialerts()->error('An unexpected error occurred during the creation process!')->tip('Please, try again later. If the problem persists contact the site administrator.')->put()
 ```
 
 You can add as many custom fields you want, remembering that you must call the `put()` method in the end of the chaining.
@@ -102,10 +102,10 @@ All alert examples used so far were stored in a flash session, but if we wanted 
 We can simple pass `false` to the `put()` method, so the alert will be shared with the view.
 
 ``` php
-multialerts()->warning('You need confirm your email address')->put(false);
+multialerts()->warning('You need confirm your email address')->put(false)
 ```
 
-That's it! You can now access the alerts through the variable `$multialerts` (you can change de variable name in the configuration file if you want).
+You can now access the alerts through the variable `$multialerts` (you can change de variable name in the configuration file if you want).
 
 ### Displaying
 
@@ -135,7 +135,7 @@ Of course you can iterate different types of alerts too.
 multialerts('anothertype')->all()
 ```
 
-If you are trying to access a specific type of alert shared with the view just do the follow.
+If you are trying to access a specific type of alert shared with the view just do the following.
 
 ``` php
 $multialerts['anothertype']
