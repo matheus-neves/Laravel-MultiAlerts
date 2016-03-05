@@ -9,15 +9,15 @@
 
 A package for managing multiple types and levels of alerts in Laravel.
 
-## Install
+## Installation
 
-To get the latest version of Laravel Multialerts, simply require the project using Composer:
+To get the latest version of Laravel Multialerts, simply require the project using Composer.
 
 ``` bash
 $ composer require gsmeira/laravel-multialerts
 ```
 
-Instead, you may of course manually update your require block and run `composer update` if you so choose:
+Instead, you may of course manually update your require block and run `composer update` if you so choose.
 
 ``` bash
 {
@@ -49,7 +49,97 @@ This will create a `config/multialerts.php` file in your app that you can modify
 
 ## Usage
 
-soon...
+Just call the helper function `multialerts()` and start chaining.
+
+An basic success alert.
+
+``` php
+multialerts()->success('The user was successfully created.')->put();
+```
+
+You can put the text alerts in your language files.
+
+``` php
+multialerts()->success('users.successfully_created')->put();
+```
+
+If the alert message have placeholders, you can pass then just like in the default Laravel `trans()` helper function (actually, behind the scenes the `trans()` helper function is called). With this little abstraction, we get a clean and more readable code.
+
+``` php
+multialerts()->success('users.successfully_created', [ $user->name ])->put();
+```
+
+That's it! You can call `multialerts()` many times as needed to show all the alerts you want.
+
+Available levels: `success`, `error`, `warning`, `info`
+
+### Custom Fields
+
+A very nice feature of Laravel Multialerts is the possibility of adding custom fields to your alert. (By default Laravel Multialerts have one field: `message`)
+
+``` php
+multialerts()->error('An unexpected error occurred during the creation process!')->tip('Please, try again later. If the problem persists contact the site administrator.')->put();
+```
+
+You can add as many custom fields you want, remembering that you must call the `put()` method in the end of the chaining.
+
+PS: In the custom fields you can pass a pair (language key, placeholders) too.
+
+### Multiple Types
+
+In addition to the levels and custom fields, with Laravel Multialerts we can have various types of alerts.
+
+``` php
+multialerts('anothertype')->error('My error message....')->put()
+```
+
+When no type is passed, it is used the default value: `default`
+
+### Storage
+
+All alert examples used so far were stored in a flash session, but if we wanted to display the alerts when we return a view and not a redirect?
+
+We can simple pass `false` to the `put()` method, so the alert will be shared with the view.
+
+``` php
+multialerts()->warning('You need confirm your email address')->put(false);
+```
+
+That's it! You can now access the alerts through the variable `$multialerts` (you can change de variable name in the configuration file if you want).
+
+### Displaying
+
+Now that we know how to create our alerts we will learn how to show them.
+
+Get all flash session alerts accessing the default field `message`.
+
+``` php
+@foreach (multialerts()->all() as $level => $alerts)
+    @foreach ($alerts as $alert)
+        {{ $alert['message'] }}
+    @endforeach
+@endforeach
+```
+
+To get all shared view alerts just pass `false` in the `all()` method or access through the `$multialerts` variable.
+
+``` php
+multialerts()->all(false)
+```
+
+The benefit of using `multialerts()->all(false)` is that you don't need to test if the variable `$multialerts` exists.
+
+Of course you can iterate different types of alerts too.
+
+``` php
+multialerts('anothertype')->all()
+```
+
+If you are trying to access a specific type of alert shared with the view just do the follow.
+
+``` php
+$multialerts['anothertype']
+```
 
 ## Change log
 

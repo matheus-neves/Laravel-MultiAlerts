@@ -43,11 +43,18 @@ class LaravelMultialerts
     private $fields;
 
     /**
-     * All alerts are stored here.
+     * All session alerts are stored here.
      *
      * @var array
      */
-    private $alerts;
+    private $sessionAlerts;
+
+    /**
+     * All view alerts are stored here.
+     *
+     * @var array
+     */
+    private $viewAlerts;
 
     /**
      * The session key used by the alerts.
@@ -55,6 +62,13 @@ class LaravelMultialerts
      * @var string
      */
     private $sessionKey;
+
+    /**
+     * The view key used by the alerts.
+     *
+     * @var string
+     */
+    private $viewKey;
 
     /**
      * Laravel Multialerts class constructor.
@@ -67,7 +81,9 @@ class LaravelMultialerts
         $this->level = '';
         $this->fields = [];
         $this->sessionKey = config('alerts.session_key', 'multialerts');
-        $this->alerts = Session::get($this->sessionKey) ? Session::get($this->sessionKey) : [];
+        $this->viewKey = config('alerts.view_key', 'multialerts');
+        $this->sessionAlerts = Session::get($this->sessionKey) ? Session::get($this->sessionKey) : [];
+        $this->viewAlerts = view()->shared($this->viewKey) ? view()->shared($this->viewKey) : [];
     }
 
     /**
@@ -93,41 +109,6 @@ class LaravelMultialerts
         $this->fields += [ $key => trans($message, $placeholders) ];
 
         return $this;
-    }
-
-    /**
-     * Makes the alerts visible only in the current request.
-     *
-     * @return void
-     */
-    public function toRequest()
-    {
-        if (Session::has($this->sessionKey))
-        {
-            view()->share('requestAlerts', $this->alerts);
-
-            Session::flash($this->sessionKey, []);
-        }
-    }
-
-    /**
-     * Adds in the session the message and the custom fields.
-     *
-     * @return void
-     */
-    public function put()
-    {
-        // Build the message.
-        $this->alerts[$this->type][$this->level][] = $this->fields;
-
-        // Serializes the array and remove duplicate messages.
-        $unique = array_unique(array_map('serialize', $this->alerts[$this->type][$this->level]));
-
-        // Intersects, returning the unique alerts.
-        $this->alerts[$this->type][$this->level] = array_intersect_key($this->alerts[$this->type][$this->level], $unique);
-
-        // Refresh the session with the new unique alerts.
-        Session::flash($this->sessionKey, $this->alerts);
     }
 
     /**
@@ -195,15 +176,62 @@ class LaravelMultialerts
     }
 
     /**
-     * Returns all alerts.
+     * Adds in the session the message and the custom fields.
      *
+     * @param bool $sessionStore
+     */
+    public function put($sessionStore = true)
+    {
+        if ($sessionStore)
+        {
+            Session::flash($this->sessionKey, $this->addAlert($this->sessionAlerts));
+        }
+        else
+        {
+            view()->share($this->viewKey, $this->addAlert($this->viewAlerts));
+        }
+    }
+
+    /**
+     * Adds a new alert.
+     *
+     * @param $alerts
      * @return mixed
      */
-    public function all()
+    private function addAlert($alerts)
     {
-        if (isset($this->alerts[$this->type]))
+        // Build the alert.
+        $alerts[$this->type][$this->level][] = $this->fields;
+
+        // Serializes the array and remove duplicate alerts.
+        $uniqueAlerts = array_unique(array_map('serialize', $alerts[$this->type][$this->level]));
+
+        // Intersects, returning the unique alerts.
+        $alerts[$this->type][$this->level] = array_intersect_key($alerts[$this->type][$this->level], $uniqueAlerts);
+
+        return $alerts;
+    }
+
+    /**
+     * Returns all alerts.
+     *
+     * @param bool $sessionStore
+     * @return mixed
+     */
+    public function all($sessionStore = true)
+    {
+        if ($sessionStore)
         {
-            return $this->alerts[$this->type];
+            $alerts = $this->sessionAlerts;
+        }
+        else
+        {
+            $alerts = $this->viewAlerts;
+        }
+
+        if (isset($alerts[$this->type]))
+        {
+            return $alerts[$this->type];
         }
         else
         {
@@ -215,13 +243,23 @@ class LaravelMultialerts
      * Returns the number of messages.
      *
      * @param string $level
+     * @param bool $sessionStore
      * @return int
      */
-    public function sizeof($level = 'error')
+    public function sizeof($level = 'error', $sessionStore = true)
     {
-        if (isset($this->alerts[$this->type][$level]))
+        if ($sessionStore)
         {
-            return sizeof($this->alerts[$this->type][$level]);
+            $alerts = $this->sessionAlerts;
+        }
+        else
+        {
+            $alerts = $this->viewAlerts;
+        }
+
+        if (isset($alerts[$this->type][$level]))
+        {
+            return sizeof($alerts[$this->type][$level]);
         }
         else
         {
