@@ -71,7 +71,7 @@ multialerts()->success('users.successfully_created', [ $user->name ])->put()
 
 That's it! You can call `multialerts()` many times as needed to show all the alerts you want.
 
-Available levels: `success`, `error`, `warning`, `info`
+Default levels: `success`, `error`, `warning`, `info` (you can add, remove or change this levels in the configuration file)
 
 ### Custom Fields
 
