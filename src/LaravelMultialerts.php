@@ -134,17 +134,39 @@ class LaravelMultialerts
         }
         else
         {
-            if ($this->chainSize === 0)
+            if ($this->chainSize > 0)
+            {
+                $this->fields += [ $key => trans($message, $placeholders) ];
+            }
+            else
             {
                 throw new Exception('Invalid level exception.');
             }
-
-            $this->fields += [ $key => trans($message, $placeholders) ];
         }
 
         $this->chainSize++;
 
         return $this;
+    }
+
+    /**
+     * Adds a new alert.
+     *
+     * @param $alerts
+     * @return mixed
+     */
+    private function addAlert($alerts)
+    {
+        // Build the alert.
+        $alerts[$this->type][$this->level][] = $this->fields;
+
+        // Serializes the array and remove duplicate alerts.
+        $uniqueAlerts = array_unique(array_map('serialize', $alerts[$this->type][$this->level]));
+
+        // Intersects, returning only the unique alerts.
+        $alerts[$this->type][$this->level] = array_intersect_key($alerts[$this->type][$this->level], $uniqueAlerts);
+
+        return $alerts;
     }
 
     /**
@@ -162,26 +184,6 @@ class LaravelMultialerts
         {
             view()->share($this->viewKey, $this->addAlert($this->viewAlerts));
         }
-    }
-
-    /**
-     * Adds a new alert.
-     *
-     * @param $alerts
-     * @return mixed
-     */
-    private function addAlert($alerts)
-    {
-        // Build the alert.
-        $alerts[$this->type][$this->level][] = $this->fields;
-
-        // Serializes the array and remove duplicate alerts.
-        $uniqueAlerts = array_unique(array_map('serialize', $alerts[$this->type][$this->level]));
-
-        // Intersects, returning the unique alerts.
-        $alerts[$this->type][$this->level] = array_intersect_key($alerts[$this->type][$this->level], $uniqueAlerts);
-
-        return $alerts;
     }
 
     /**
@@ -208,34 +210,6 @@ class LaravelMultialerts
         else
         {
             return [];
-        }
-    }
-
-    /**
-     * Returns the number of messages.
-     *
-     * @param string $level
-     * @param bool $sessionStore
-     * @return int
-     */
-    public function sizeof($level = 'error', $sessionStore = true)
-    {
-        if ($sessionStore)
-        {
-            $alerts = $this->sessionAlerts;
-        }
-        else
-        {
-            $alerts = $this->viewAlerts;
-        }
-
-        if (isset($alerts[$this->type][$level]))
-        {
-            return sizeof($alerts[$this->type][$level]);
-        }
-        else
-        {
-            return 0;
         }
     }
 }
