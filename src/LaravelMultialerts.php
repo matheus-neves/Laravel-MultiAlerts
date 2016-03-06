@@ -11,6 +11,7 @@
 
 namespace GSMeira\LaravelMultialerts;
 
+use Exception;
 use Illuminate\Support\Facades\Session;
 
 /**
@@ -71,6 +72,20 @@ class LaravelMultialerts
     private $viewKey;
 
     /**
+     * Available levels.
+     *
+     * @var string
+     */
+    private $levels;
+
+    /**
+     * Available levels.
+     *
+     * @var string
+     */
+    private $chainSize;
+
+    /**
      * Laravel Multialerts class constructor.
      *
      * @param string $type
@@ -80,8 +95,10 @@ class LaravelMultialerts
         $this->type = $type;
         $this->level = '';
         $this->fields = [];
-        $this->sessionKey = config('alerts.session_key', 'multialerts');
-        $this->viewKey = config('alerts.view_key', 'multialerts');
+        $this->sessionKey = config('gsmeira.multialerts.session_key', 'multialerts');
+        $this->viewKey = config('gsmeira.multialerts.view_key', 'multialerts');
+        $this->levels = config('gsmeira.multialerts.levels', [ 'success', 'warning', 'error', 'info' ]);
+        $this->chainSize = 0;
         $this->sessionAlerts = Session::get($this->sessionKey) ? Session::get($this->sessionKey) : [];
         $this->viewAlerts = view()->shared($this->viewKey) ? view()->shared($this->viewKey) : [];
     }
@@ -92,6 +109,7 @@ class LaravelMultialerts
      * @param $key
      * @param $args
      * @return $this
+     * @throws Exception
      */
     public function __call($key, $args)
     {
@@ -106,71 +124,25 @@ class LaravelMultialerts
             list($message) = $args;
         }
 
-        $this->fields += [ $key => trans($message, $placeholders) ];
+        if (in_array($key, $this->levels) )
+        {
+            $this->level = $key;
 
-        return $this;
-    }
+            $this->fields += [ 'message' => trans($message, $placeholders) ];
+        }
+        else
+        {
+            if ($this->chainSize > 0)
+            {
+                $this->fields += [ $key => trans($message, $placeholders) ];
+            }
+            else
+            {
+                throw new Exception('Invalid level exception.');
+            }
+        }
 
-    /**
-     * Build an information alert.
-     *
-     * @param $message
-     * @param array $placeholders
-     * @return $this
-     */
-    public function info($message, $placeholders = [])
-    {
-        $this->level = 'info';
-
-        $this->fields += [ 'message' => trans($message, $placeholders) ];
-
-        return $this;
-    }
-
-    /**
-     * Build an success alert.
-     *
-     * @param $message
-     * @param array $placeholders
-     * @return $this
-     */
-    public function success($message, $placeholders = [])
-    {
-        $this->level = 'success';
-
-        $this->fields += [ 'message' => trans($message, $placeholders) ];
-
-        return $this;
-    }
-
-    /**
-     * Build an error alert.
-     *
-     * @param $message
-     * @param array $placeholders
-     * @return $this
-     */
-    public function error($message, $placeholders = [])
-    {
-        $this->level = 'error';
-
-        $this->fields += [ 'message' => trans($message, $placeholders) ];
-
-        return $this;
-    }
-
-    /**
-     * Build an warning alert.
-     *
-     * @param $message
-     * @param array $placeholders
-     * @return $this
-     */
-    public function warning($message, $placeholders = [])
-    {
-        $this->level = 'warning';
-
-        $this->fields += [ 'message' => trans($message, $placeholders) ];
+        $this->chainSize = $this->chainSize + 1;
 
         return $this;
     }

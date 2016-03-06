@@ -17,8 +17,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | Name that will be used to store the alerts in the session. This option
-    | can be changed if it conflicts with any other session key or if you
-    | want to use a different name.
+    | can be changed if it conflicts with any other session key.
     |
     */
 
@@ -31,10 +30,28 @@ return [
     |
     | Name of the variable that will be used to store the alerts in the view.
     | This option can be changed if it conflicts with any other variable
-    | names of your views, or if you want to use a different name.
+    | names of your views.
     |
     */
 
-    'view_key' => 'multialerts'
+    'view_key' => 'multialerts',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Levels
+    |--------------------------------------------------------------------------
+    |
+    | Here you can define an array with the available alert levels. Feel
+    | free to add, remove or change this option with the values that
+    | fit better your application.
+    |
+    */
+
+    'levels' => [
+        'success',
+        'warning',
+        'error',
+        'info'
+    ]
 
 ];

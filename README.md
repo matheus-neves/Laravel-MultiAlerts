@@ -83,7 +83,9 @@ multialerts()->error('An unexpected error occurred during the creation process!'
 
 You can add as many custom fields you want, remembering that you must call the `put()` method in the end of the chaining.
 
-PS: In the custom fields you can pass a pair (language key, placeholders) too.
+**Note:**
+
+* In the custom fields you can pass a pair (language key, placeholders) too.
 
 ### Multiple Types
 
@@ -97,21 +99,24 @@ When no type is passed, it is used the default value: `default`
 
 ### Storage
 
-All alert examples used so far were stored in a flash session, but if we wanted to display the alerts when we return a view and not a redirect?
+All alert examples used so far were stored in a flash session, and it works well for most cases. In other cases it would be interesting to just share the alerts with the view, and make the alerts visible only in the current request.
 
-We can simple pass `false` to the `put()` method, so the alert will be shared with the view.
+To do this you just need to pass `false` in the `put()` method, so the alert will only be shared with the view.
 
 ``` php
 multialerts()->warning('You need confirm your email address')->put(false)
 ```
 
-You can now access the alerts through the variable `$multialerts` (you can change de variable name in the configuration file if you want).
+You can now access the _**"shared view alerts"**_ through the variable `$multialerts['default']` (you can change de variable name in the configuration file if you want).
+
+**Notes:**
+
+* Probably is a better choice to use just `multialerts()->all(false)` because the `default` type is implicit and you don't need to check if the variable `$multialerts` exists in the view.
+* You can mix _**"flash session alerts"**_ and _**"shared view alerts"**_. They are stored separately.
 
 ### Displaying
 
-Now that we know how to create our alerts we will learn how to show them.
-
-Get all flash session alerts accessing the default field `message`.
+Get all _**"flash session alerts"**_ accessing the default field `message`.
 
 ``` php
 @foreach (multialerts()->all() as $level => $alerts)
@@ -121,24 +126,16 @@ Get all flash session alerts accessing the default field `message`.
 @endforeach
 ```
 
-To get all shared view alerts just pass `false` in the `all()` method or access through the `$multialerts` variable.
+To get all _**"shared view alerts"**_ just pass `false` in the `all()` method or access through the `$multialerts['default']` variable.
 
 ``` php
 multialerts()->all(false)
 ```
 
-The benefit of using `multialerts()->all(false)` is that you don't need to test if the variable `$multialerts` exists.
-
 Of course you can iterate different types of alerts too.
 
 ``` php
 multialerts('anothertype')->all()
-```
-
-If you are trying to access a specific type of alert shared with the view just do the following.
-
-``` php
-$multialerts['anothertype']
 ```
 
 ## Change log
