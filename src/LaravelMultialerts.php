@@ -79,7 +79,7 @@ class LaravelMultialerts
     private $levels;
 
     /**
-     * Available levels.
+     * Chain size.
      *
      * @var int
      */
@@ -95,10 +95,12 @@ class LaravelMultialerts
         $this->type = $type;
         $this->level = '';
         $this->fields = [];
+        $this->chainSize = 0;
+
         $this->sessionKey = config('gsmeira.multialerts.session_key', 'multialerts');
         $this->viewKey = config('gsmeira.multialerts.view_key', 'multialerts');
         $this->levels = config('gsmeira.multialerts.levels', [ 'success', 'warning', 'error', 'info' ]);
-        $this->chainSize = 0;
+
         $this->sessionAlerts = session()->get($this->sessionKey) ? session()->get($this->sessionKey) : [];
         $this->viewAlerts = view()->shared($this->viewKey) ? view()->shared($this->viewKey) : [];
     }
@@ -124,7 +126,7 @@ class LaravelMultialerts
             list($message) = $args;
         }
 
-        if (in_array($key, $this->levels))
+        if (in_array($key, $this->levels) && $this->chainSize === 0)
         {
             $this->level = $key;
 
@@ -132,17 +134,15 @@ class LaravelMultialerts
         }
         else
         {
-            if ($this->chainSize > 0)
-            {
-                $this->fields += [ $key => trans($message, $placeholders) ];
-            }
-            else
+            if ($this->chainSize === 0)
             {
                 throw new Exception('Invalid level exception.');
             }
+
+            $this->fields += [ $key => trans($message, $placeholders) ];
         }
 
-        $this->chainSize = $this->chainSize + 1;
+        $this->chainSize++;
 
         return $this;
     }
