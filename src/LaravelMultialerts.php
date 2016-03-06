@@ -81,7 +81,7 @@ class LaravelMultialerts
     /**
      * Available levels.
      *
-     * @var string
+     * @var int
      */
     private $chainSize;
 
