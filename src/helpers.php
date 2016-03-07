@@ -11,8 +11,7 @@
 
 use GSMeira\LaravelMultialerts\LaravelMultialerts;
 
-if (! function_exists('multialerts'))
-{
+if (! function_exists('multialerts')) {
     /**
      * Returns an instance of Laravel Multialerts.
      *

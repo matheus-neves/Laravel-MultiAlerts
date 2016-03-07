@@ -117,29 +117,20 @@ class LaravelMultialerts
     {
         $placeholders = [];
 
-        if (sizeof($args) > 1)
-        {
+        if (sizeof($args) > 1) {
             list($message, $placeholders) = $args;
-        }
-        else
-        {
+        } else {
             list($message) = $args;
         }
 
-        if (in_array($key, $this->levels) && $this->chainSize === 0)
-        {
+        if (in_array($key, $this->levels) && $this->chainSize === 0) {
             $this->level = $key;
 
             $this->fields += [ 'message' => trans($message, $placeholders) ];
-        }
-        else
-        {
-            if ($this->chainSize > 0)
-            {
+        } else {
+            if ($this->chainSize > 0) {
                 $this->fields += [ $key => trans($message, $placeholders) ];
-            }
-            else
-            {
+            } else {
                 throw new Exception('Invalid level exception.');
             }
         }
@@ -176,12 +167,9 @@ class LaravelMultialerts
      */
     public function put($sessionStore = true)
     {
-        if ($sessionStore)
-        {
+        if ($sessionStore) {
             Session::flash($this->sessionKey, $this->addAlert($this->sessionAlerts));
-        }
-        else
-        {
+        } else {
             view()->share($this->viewKey, $this->addAlert($this->viewAlerts));
         }
     }
@@ -194,21 +182,15 @@ class LaravelMultialerts
      */
     public function all($sessionStore = true)
     {
-        if ($sessionStore)
-        {
+        if ($sessionStore) {
             $alerts = $this->sessionAlerts;
-        }
-        else
-        {
+        } else {
             $alerts = $this->viewAlerts;
         }
 
-        if (isset($alerts[$this->type]))
-        {
+        if (isset($alerts[$this->type])) {
             return $alerts[$this->type];
-        }
-        else
-        {
+        } else {
             return [];
         }
     }

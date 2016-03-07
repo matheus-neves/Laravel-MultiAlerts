@@ -51,7 +51,7 @@ return [
         'success',
         'warning',
         'error',
-        'info'
-    ]
+        'info',
+    ],
 
 ];

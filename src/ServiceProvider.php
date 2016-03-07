@@ -47,8 +47,7 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        $this->app->bind('laravel-multialerts', function($app)
-        {
+        $this->app->bind('laravel-multialerts', function($app) {
             return new LaravelMultialerts($app);
         });
     }
