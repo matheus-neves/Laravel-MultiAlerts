@@ -9,6 +9,22 @@
 
 A package for managing multiple types and levels of alerts in Laravel.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+    - [Custom Fields](#custom-fields)
+    - [Multiple Types](#multiple-types)
+    - [Storage](#storage)
+    - [Displaying](#displaying)
+- [Changelog](#changelog)
+- [Testing](#testing)
+- [Contributing](#contributing)
+- [Security](#security)
+- [Credits](#credits)
+- [License](#license)
+
 ## Installation
 
 To get the latest version of Laravel Multialerts, simply require the project using Composer.
@@ -38,6 +54,8 @@ You can register the Laravel Multialerts facade in the aliases key of your confi
 ``` php
 'Multialerts' => 'GSMeira\LaravelMultialerts\Facade'
 ```
+
+## Configuration
 
 In the last step of the installation, you must publish the configuration file.
 
@@ -138,7 +156,7 @@ Of course you can iterate different types of alerts too.
 multialerts('anothertype')->all()
 ```
 
-## Change log
+## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
