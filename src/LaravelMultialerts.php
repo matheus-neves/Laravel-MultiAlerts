@@ -105,6 +105,12 @@ class LaravelMultialerts
         $this->viewAlerts = view()->shared($this->viewKey) ? view()->shared($this->viewKey) : [];
     }
 
+    /**
+     * Define the type of the alert.
+     *
+     * @param $type
+     * @return $this
+     */
     public function type($type)
     {
         $this->type = $type;
