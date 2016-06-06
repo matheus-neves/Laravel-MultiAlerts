@@ -27,7 +27,7 @@ class LaravelMultialerts
      *
      * @var string
      */
-    private $type;
+    private $type = 'default';
 
     /**
      * Alert level.
@@ -88,21 +88,28 @@ class LaravelMultialerts
     /**
      * Laravel Multialerts class constructor.
      *
-     * @param string $type
+     * @param $sessionKey
+     * @param $viewKey
+     * @param $levels
      */
-    public function __construct($type = 'default')
+    public function __construct($sessionKey, $viewKey, $levels)
     {
-        $this->type = $type;
         $this->level = '';
         $this->fields = [];
         $this->chainSize = 0;
-
-        $this->sessionKey = config('gsmeira.multialerts.session_key', 'multialerts');
-        $this->viewKey = config('gsmeira.multialerts.view_key', 'multialerts');
-        $this->levels = config('gsmeira.multialerts.levels', [ 'success', 'warning', 'error', 'info' ]);
+        $this->sessionKey = $sessionKey;
+        $this->viewKey = $viewKey;
+        $this->levels = $levels;
 
         $this->sessionAlerts = session()->get($this->sessionKey) ? session()->get($this->sessionKey) : [];
         $this->viewAlerts = view()->shared($this->viewKey) ? view()->shared($this->viewKey) : [];
+    }
+
+    public function type($type)
+    {
+        $this->type = $type;
+
+        return $this;
     }
 
     /**
@@ -146,7 +153,7 @@ class LaravelMultialerts
      * @param $alerts
      * @return mixed
      */
-    private function addAlert($alerts)
+    private function add($alerts)
     {
         // Build the alert.
         $alerts[$this->type][$this->level][] = $this->fields;
@@ -168,9 +175,9 @@ class LaravelMultialerts
     public function put($sessionStore = true)
     {
         if ($sessionStore) {
-            Session::flash($this->sessionKey, $this->addAlert($this->sessionAlerts));
+            session()->flash($this->sessionKey, $this->add($this->sessionAlerts));
         } else {
-            view()->share($this->viewKey, $this->addAlert($this->viewAlerts));
+            view()->share($this->viewKey, $this->add($this->viewAlerts));
         }
     }
 

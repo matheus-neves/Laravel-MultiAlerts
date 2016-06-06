@@ -20,6 +20,6 @@ if (! function_exists('multialerts')) {
      */
     function multialerts($type = 'default')
     {
-        return app(LaravelMultialerts::class, [ $type ]);
+        return app('laravel-multialerts')->type($type);
     }
 }

@@ -6,6 +6,7 @@
 [![Coverage Status][ico-scrutinizer]][link-scrutinizer]
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
+[![StyleCI][ico-styleci]][link-styleci]
 
 A package for managing multiple types and levels of alerts in Laravel.
 
@@ -187,6 +188,7 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/gsmeira/laravel-multialerts.svg?style=flat-square
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/gsmeira/laravel-multialerts.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/gsmeira/laravel-multialerts.svg?style=flat-square
+[ico-styleci]: https://styleci.io/repos/52993366/shield
 
 [link-packagist]: https://packagist.org/packages/gsmeira/laravel-multialerts
 [link-travis]: https://travis-ci.org/gsmeira/laravel-multialerts
@@ -195,3 +197,4 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [link-downloads]: https://packagist.org/packages/gsmeira/laravel-multialerts
 [link-author]: https://github.com/gsmeira
 [link-contributors]: ../../contributors
+[link-styleci]: https://styleci.io/repos/52993366
