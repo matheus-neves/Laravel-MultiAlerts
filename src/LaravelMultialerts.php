@@ -12,7 +12,6 @@
 namespace GSMeira\LaravelMultialerts;
 
 use Exception;
-use Illuminate\Support\Facades\Session;
 
 /**
  * This is the Laravel Multialerts main class.
@@ -106,19 +105,6 @@ class LaravelMultialerts
     }
 
     /**
-     * Define the type of the alert.
-     *
-     * @param $type
-     * @return $this
-     */
-    public function type($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
      * Magic method that creates the fields to be used in the alert.
      *
      * @param $key
@@ -154,23 +140,16 @@ class LaravelMultialerts
     }
 
     /**
-     * Adds a new alert.
+     * Define the type of the alert.
      *
-     * @param $alerts
-     * @return mixed
+     * @param $type
+     * @return $this
      */
-    private function add($alerts)
+    public function type($type)
     {
-        // Build the alert.
-        $alerts[$this->type][$this->level][] = $this->fields;
+        $this->type = $type;
 
-        // Serializes the array and remove duplicate alerts.
-        $uniqueAlerts = array_unique(array_map('serialize', $alerts[$this->type][$this->level]));
-
-        // Intersects, returning only the unique alerts.
-        $alerts[$this->type][$this->level] = array_intersect_key($alerts[$this->type][$this->level], $uniqueAlerts);
-
-        return $alerts;
+        return $this;
     }
 
     /**
@@ -181,9 +160,9 @@ class LaravelMultialerts
     public function put($sessionStore = true)
     {
         if ($sessionStore) {
-            session()->flash($this->sessionKey, $this->add($this->sessionAlerts));
+            session()->flash($this->sessionKey, $this->persist($this->sessionAlerts));
         } else {
-            view()->share($this->viewKey, $this->add($this->viewAlerts));
+            view()->share($this->viewKey, $this->persist($this->viewAlerts));
         }
     }
 
@@ -206,5 +185,25 @@ class LaravelMultialerts
         } else {
             return [];
         }
+    }
+
+    /**
+     * Persist a new alert.
+     *
+     * @param $alerts
+     * @return mixed
+     */
+    private function persist($alerts)
+    {
+        // Build the alert.
+        $alerts[$this->type][$this->level][] = $this->fields;
+
+        // Serializes the array and remove duplicate alerts.
+        $uniqueAlerts = array_unique(array_map('serialize', $alerts[$this->type][$this->level]));
+
+        // Intersects, returning only the unique alerts.
+        $alerts[$this->type][$this->level] = array_intersect_key($alerts[$this->type][$this->level], $uniqueAlerts);
+
+        return $alerts;
     }
 }
