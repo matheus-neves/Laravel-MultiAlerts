@@ -47,9 +47,12 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        $this->app->bind('laravel-multialerts', function ($app) {
+        $viewKey = $this->app->config->get('gsmeira.multialerts.view_key', 'multialerts');
+
+        $this->app->view->share($viewKey, []);
+
+        $this->app->bind('laravel-multialerts', function ($app) use ($viewKey) {
             $sessionKey = $app->config->get('gsmeira.multialerts.session_key', 'multialerts');
-            $viewKey = $app->config->get('gsmeira.multialerts.view_key', 'multialerts');
             $levels = $app->config->get('gsmeira.multialerts.levels', [ 'success', 'warning', 'error', 'info' ]);
 
             return new LaravelMultialerts($sessionKey, $viewKey, $levels);
