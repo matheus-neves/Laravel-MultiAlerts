@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Laravel Multialerts.
+ * This file is part of Laravel-MultiAlerts.
  *
  * (c) Gustavo Meireles <gustavo@gsmeira.com>
  *
@@ -9,17 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace GSMeira\LaravelMultialerts;
+namespace GSMeira\LaravelMultiAlerts;
 
 use Exception;
 
 /**
- * This is the Laravel Multialerts main class.
+ * This is the Laravel-MultiAlerts main class.
  *
  * @author Gustavo Meireles <gustavo@gsmeira.com>
- * @package GSMeira\LaravelMultialerts
+ * @package GSMeira\LaravelMultiAlerts
  */
-class LaravelMultialerts
+class LaravelMultiAlerts
 {
     /**
      * Type of the alert.
@@ -85,7 +85,7 @@ class LaravelMultialerts
     private $chainSize;
 
     /**
-     * Laravel Multialerts class constructor.
+     * Laravel-MultiAlerts class constructor.
      *
      * @param $sessionKey
      * @param $viewKey

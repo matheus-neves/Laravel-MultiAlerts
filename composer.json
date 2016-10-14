@@ -4,9 +4,14 @@
     "description": "A package for managing multiple types and levels of alerts in Laravel.",
     "keywords": [
         "gsmeira",
-        "laravel-multialerts"
+        "laravel-multialerts",
+        "laravel",
+        "multialerts",
+        "alerts",
+        "multi",
+        "multiple"
     ],
-    "homepage": "https://github.com/gsmeira/laravel-multialerts",
+    "homepage": "https://github.com/gsmeira/Laravel-MultiAlerts",
     "license": "MIT",
     "authors": [
         {
@@ -27,7 +32,7 @@
     },
     "autoload": {
         "psr-4": {
-            "GSMeira\\LaravelMultialerts\\": "src"
+            "GSMeira\\LaravelMultiAlerts\\": "src"
         },
         "files": [
             "src/helpers.php"
@@ -35,7 +40,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "GSMeira\\LaravelMultialerts\\": "tests"
+            "GSMeira\\LaravelMultiAlerts\\": "tests"
         }
     },
     "scripts": {

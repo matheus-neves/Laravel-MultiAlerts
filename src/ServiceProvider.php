@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Laravel Multialerts.
+ * This file is part of Laravel-MultiAlerts.
  *
  * (c) Gustavo Meireles <gustavo@gsmeira.com>
  *
@@ -9,15 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace GSMeira\LaravelMultialerts;
+namespace GSMeira\LaravelMultiAlerts;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 /**
- * This is the Laravel Multialerts service provider class.
+ * This is the Laravel-MultiAlerts service provider class.
  *
  * @author Gustavo Meireles <gustavo@gsmeira.com>
- * @package GSMeira\LaravelMultialerts
+ * @package GSMeira\LaravelMultiAlerts
  */
 class ServiceProvider extends BaseServiceProvider
 {
@@ -55,7 +55,7 @@ class ServiceProvider extends BaseServiceProvider
             $sessionKey = $app->config->get('gsmeira.multialerts.session_key', 'multialerts');
             $levels = $app->config->get('gsmeira.multialerts.levels', [ 'success', 'warning', 'error', 'info' ]);
 
-            return new LaravelMultialerts($sessionKey, $viewKey, $levels);
+            return new LaravelMultiAlerts($sessionKey, $viewKey, $levels);
         });
     }
 }

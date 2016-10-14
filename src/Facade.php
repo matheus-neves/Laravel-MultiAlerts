@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Laravel Multialerts.
+ * This file is part of Laravel-MultiAlerts.
  *
  * (c) Gustavo Meireles <gustavo@gsmeira.com>
  *
@@ -9,15 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace GSMeira\LaravelMultialerts;
+namespace GSMeira\LaravelMultiAlerts;
 
 use Illuminate\Support\Facades\Facade as BaseFacade;
 
 /**
- * This is the Laravel Multialerts facade class.
+ * This is the Laravel-MultiAlerts facade class.
  *
  * @author Gustavo Meireles <gustavo@gsmeira.com>
- * @package GSMeira\LaravelMultialerts
+ * @package GSMeira\LaravelMultiAlerts
  */
 class Facade extends BaseFacade
 {

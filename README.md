@@ -1,4 +1,4 @@
-# laravel-multialerts
+# Laravel-MultiAlerts
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
@@ -28,7 +28,7 @@ A package for managing multiple types and levels of alerts in Laravel.
 
 ## Installation
 
-To get the latest version of Laravel Multialerts, simply require the project using Composer.
+To get the latest version of Laravel-MultiAlerts, simply require the project using Composer.
 
 ``` bash
 $ composer require gsmeira/laravel-multialerts
@@ -44,16 +44,16 @@ Instead, you may of course manually update your require block and run `composer 
 }
 ```
 
-Once Laravel Multialerts is installed, you need to register the service provider. Open up `config/app.php` and add the following to the providers key.
+Once Laravel-MultiAlerts is installed, you need to register the service provider. Open up `config/app.php` and add the following to the providers key.
 
 ``` php
-'GSMeira\LaravelMultialerts\ServiceProvider'
+'GSMeira\LaravelMultiAlerts\ServiceProvider'
 ```
 
-You can register the Laravel Multialerts facade in the aliases key of your config/app.php file if you like.
+You can register the Laravel-MultiAlerts facade in the aliases key of your config/app.php file if you like.
 
 ``` php
-'Multialerts' => 'GSMeira\LaravelMultialerts\Facade'
+'MultiAlerts' => 'GSMeira\LaravelMultiAlerts\Facade'
 ```
 
 ## Configuration
@@ -94,7 +94,7 @@ Default levels: `success`, `error`, `warning`, `info` (you can add, remove or ch
 
 ### Custom Fields
 
-A very nice feature of Laravel Multialerts is the possibility of adding custom fields to your alert. (By default Laravel Multialerts have one field: `message`)
+A very nice feature of Laravel-MultiAlerts is the possibility of adding custom fields to your alert. (By default Laravel-MultiAlerts have one field: `message`)
 
 ``` php
 multialerts()->error('An unexpected error occurred during the creation process!')->tip('Please, try again later. If the problem persists contact the site administrator.')->put()
@@ -108,7 +108,7 @@ You can add as many custom fields you want, remembering that you must call the `
 
 ### Multiple Types
 
-In addition to the levels and custom fields, with Laravel Multialerts we can have various types of alerts.
+In addition to the levels and custom fields, with Laravel-MultiAlerts we can have various types of alerts.
 
 ``` php
 multialerts('anothertype')->error('My error message....')->put()
@@ -182,19 +182,19 @@ If you discover any security related issues, please email gustavo@gsmeira.com in
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/gsmeira/laravel-multialerts.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/gsmeira/Laravel-MultiAlerts.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/gsmeira/laravel-multialerts/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/gsmeira/laravel-multialerts.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/gsmeira/laravel-multialerts.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/gsmeira/laravel-multialerts.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/gsmeira/Laravel-MultiAlerts/master.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/gsmeira/Laravel-MultiAlerts.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/gsmeira/Laravel-MultiAlerts.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/gsmeira/Laravel-MultiAlerts.svg?style=flat-square
 [ico-styleci]: https://styleci.io/repos/52993366/shield
 
-[link-packagist]: https://packagist.org/packages/gsmeira/laravel-multialerts
-[link-travis]: https://travis-ci.org/gsmeira/laravel-multialerts
-[link-scrutinizer]: https://scrutinizer-ci.com/g/gsmeira/laravel-multialerts/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/gsmeira/laravel-multialerts
-[link-downloads]: https://packagist.org/packages/gsmeira/laravel-multialerts
+[link-packagist]: https://packagist.org/packages/gsmeira/Laravel-MultiAlerts
+[link-travis]: https://travis-ci.org/gsmeira/Laravel-MultiAlerts
+[link-scrutinizer]: https://scrutinizer-ci.com/g/gsmeira/Laravel-MultiAlerts/code-structure
+[link-code-quality]: https://scrutinizer-ci.com/g/gsmeira/Laravel-MultiAlerts
+[link-downloads]: https://packagist.org/packages/gsmeira/Laravel-MultiAlerts
 [link-author]: https://github.com/gsmeira
 [link-contributors]: ../../contributors
 [link-styleci]: https://styleci.io/repos/52993366

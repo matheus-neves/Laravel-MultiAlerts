@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Laravel Multialerts.
+ * This file is part of Laravel-MultiAlerts.
  *
  * (c) Gustavo Meireles <gustavo@gsmeira.com>
  *

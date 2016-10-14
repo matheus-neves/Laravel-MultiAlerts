@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Laravel Multialerts.
+ * This file is part of Laravel-MultiAlerts.
  *
  * (c) Gustavo Meireles <gustavo@gsmeira.com>
  *
@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-use GSMeira\LaravelMultialerts\LaravelMultialerts;
+use GSMeira\LaravelMultiAlerts\LaravelMultiAlerts;
 
 if (! function_exists('multialerts')) {
     /**
-     * Returns an instance of Laravel Multialerts.
+     * Returns an instance of Laravel-MultiAlerts.
      *
      * @param string $type
-     * @return LaravelMultialerts
+     * @return LaravelMultiAlerts
      */
     function multialerts($type = 'default')
     {
