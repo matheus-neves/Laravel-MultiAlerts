@@ -11,14 +11,14 @@
 
 use GSMeira\LaravelMultiAlerts\LaravelMultiAlerts;
 
-if (! function_exists('multialerts')) {
+if (! function_exists('multi_alerts')) {
     /**
      * Returns an instance of Laravel-MultiAlerts.
      *
      * @param string $type
      * @return LaravelMultiAlerts
      */
-    function multialerts($type = 'default')
+    function multi_alerts($type = 'default')
     {
         return app('laravel-multialerts')->type($type);
     }
