@@ -141,12 +141,12 @@ class LaravelMultiAlerts
     }
 
     /**
-     * Define the type of the alert.
+     * Faz a inicialização do Laravel-MultiAlerts.
      *
      * @param $type
      * @return $this
      */
-    public function type($type)
+    public function initialize($type)
     {
         $this->type = $type;
 
