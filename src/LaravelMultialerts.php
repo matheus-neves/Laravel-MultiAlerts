@@ -26,73 +26,73 @@ class LaravelMultiAlerts
      *
      * @var string
      */
-    private $type = 'default';
+    protected $type = 'default';
 
     /**
      * Alert level.
      *
      * @var string
      */
-    private $level;
+    protected $level;
 
     /**
      * Alert fields.
      *
      * @var array
      */
-    private $fields;
+    protected $fields;
 
     /**
      * All session alerts are stored here.
      *
      * @var array
      */
-    private $sessionAlerts;
+    protected $sessionAlerts;
 
     /**
      * All view alerts are stored here.
      *
      * @var array
      */
-    private $viewAlerts;
+    protected $viewAlerts;
 
     /**
      * The session key used by the alerts.
      *
      * @var string
      */
-    private $sessionKey;
+    protected $sessionKey;
 
     /**
      * The view key used by the alerts.
      *
      * @var string
      */
-    private $viewKey;
+    protected $viewKey;
 
     /**
      * Available levels.
      *
-     * @var string
+     * @var array
      */
-    private $levels;
+    protected $levels;
 
     /**
      * Chain size.
      *
      * @var int
      */
-    private $chainSize;
+    protected $chainSize;
 
     /**
      * Laravel-MultiAlerts class constructor.
      *
      * @param $sessionKey
      * @param $viewKey
-     * @param $levels
+     * @param array $levels
      * @return void
      */
-    public function __construct($sessionKey, $viewKey, $levels)
+    public function __construct($sessionKey, $viewKey, array $levels)
     {
         $this->level = '';
         $this->fields = [];
@@ -157,6 +157,7 @@ class LaravelMultiAlerts
      * Adds in the session the message and the custom fields.
      *
      * @param bool $sessionStore
+     * @return void
      */
     public function put($sessionStore = true)
     {
@@ -171,7 +172,7 @@ class LaravelMultiAlerts
      * Returns all alerts.
      *
      * @param bool $sessionStore
-     * @return mixed
+     * @return array
      */
     public function all($sessionStore = true)
     {
@@ -181,20 +182,20 @@ class LaravelMultiAlerts
             $alerts = $this->viewAlerts;
         }
 
-        if (isset($alerts[$this->type])) {
-            return $alerts[$this->type];
-        } else {
+        if (! isset($alerts[$this->type])) {
             return [];
         }
+
+        return $alerts[$this->type];
     }
 
     /**
      * Persist a new alert.
      *
      * @param $alerts
-     * @return mixed
+     * @return array
      */
-    private function persist($alerts)
+    protected function persist($alerts)
     {
         // Build the alert.
         $alerts[$this->type][$this->level][] = $this->fields;
