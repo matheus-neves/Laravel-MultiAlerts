@@ -90,7 +90,7 @@ class LaravelMultiAlerts
      * @param $sessionKey
      * @param $viewKey
      * @param array $levels
-     * @return void
+     * @return self
      */
     public function __construct($sessionKey, $viewKey, array $levels)
     {
@@ -141,7 +141,7 @@ class LaravelMultiAlerts
     }
 
     /**
-     * Faz a inicialização do Laravel-MultiAlerts.
+     * Initializes the Laravel-MultiAlerts component.
      *
      * @param $type
      * @return $this
