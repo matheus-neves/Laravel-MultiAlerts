@@ -68,27 +68,27 @@ This will create a `config/multialerts.php` file in your app that you can modify
 
 ## Usage
 
-Just call the helper function `multialerts()` and start chaining.
+Just call the helper function `multi_alerts()` and start chaining.
 
 An basic success alert.
 
 ``` php
-multialerts()->success('The user was successfully created.')->put()
+multi_alerts()->success('The user was successfully created.')->put()
 ```
 
 You can put the alert message in your language files.
 
 ``` php
-multialerts()->success('users.successfully_created')->put()
+multi_alerts()->success('users.successfully_created')->put()
 ```
 
 If the alert message have placeholders, you can pass then just like in the default Laravel `trans()` helper function (actually, behind the scenes the `trans()` helper function is called). With this little abstraction, we get a clean and more readable code.
 
 ``` php
-multialerts()->success('users.successfully_created', [ $user->name ])->put()
+multi_alerts()->success('users.successfully_created', [ $user->name ])->put()
 ```
 
-That's it! You can call `multialerts()` many times as needed to show all the alerts you want.
+That's it! You can call `multi_alerts()` many times as needed to show all the alerts you want.
 
 Default levels: `success`, `error`, `warning`, `info` (you can add, remove or change this levels in the configuration file)
 
@@ -97,7 +97,7 @@ Default levels: `success`, `error`, `warning`, `info` (you can add, remove or ch
 A very nice feature of Laravel-MultiAlerts is the possibility of adding custom fields to your alert. (By default Laravel-MultiAlerts have one field: `message`)
 
 ``` php
-multialerts()->error('An unexpected error occurred during the creation process!')->tip('Please, try again later. If the problem persists contact the site administrator.')->put()
+multi_alerts()->error('An unexpected error occurred during the creation process!')->tip('Please, try again later. If the problem persists contact the site administrator.')->put()
 ```
 
 You can add as many custom fields you want, remembering that you must call the `put()` method in the end of the chaining.
@@ -111,7 +111,7 @@ You can add as many custom fields you want, remembering that you must call the `
 In addition to the levels and custom fields, with Laravel-MultiAlerts we can have various types of alerts.
 
 ``` php
-multialerts('anothertype')->error('My error message....')->put()
+multi_alerts('anothertype')->error('My error message....')->put()
 ```
 
 When no type is passed, it is used the default value: `default`
@@ -123,14 +123,14 @@ All alert examples used so far were stored in a flash session, and it works well
 To do this you just need to pass `false` in the `put()` method, so the alert will only be shared with the view.
 
 ``` php
-multialerts()->warning('You need confirm your email address')->put(false)
+multi_alerts()->warning('You need confirm your email address')->put(false)
 ```
 
-You can now access the _**"shared view alerts"**_ through the variable `$multialerts['default']` (you can change de variable name in the configuration file if you want).
+You can now access the _**"shared view alerts"**_ through the variable `$multiAlerts['default']` (you can change de variable name in the configuration file if you want).
 
 **Notes:**
 
-* Probably is a better choice to use just `multialerts()->all(false)` because the `default` type is implicit and you don't need to check if the variable `$multialerts` exists in the view.
+* Probably is a better choice to use just `multi_alerts()->all(false)` because the `default` type is implicit and you don't need to check if the variable `$multiAlerts` exists in the view.
 * You can mix _**"flash session alerts"**_ and _**"shared view alerts"**_. They are stored separately.
 
 ### Displaying
@@ -138,23 +138,23 @@ You can now access the _**"shared view alerts"**_ through the variable `$multial
 Get all _**"flash session alerts"**_ accessing the default field `message`.
 
 ``` php
-@foreach (multialerts()->all() as $level => $alerts)
+@foreach (multi_alerts()->all() as $level => $alerts)
     @foreach ($alerts as $alert)
         {{ $alert['message'] }}
     @endforeach
 @endforeach
 ```
 
-To get all _**"shared view alerts"**_ just pass `false` in the `all()` method or access through the `$multialerts['default']` variable.
+To get all _**"shared view alerts"**_ just pass `false` in the `all()` method or access through the `$multiAlerts['default']` variable.
 
 ``` php
-multialerts()->all(false)
+multi_alerts()->all(false)
 ```
 
 Of course you can iterate different types of alerts too.
 
 ``` php
-multialerts('anothertype')->all()
+multi_alerts('anothertype')->all()
 ```
 
 ## Changelog
