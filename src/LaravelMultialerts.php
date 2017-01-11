@@ -19,7 +19,7 @@ use Exception;
  * @author Gustavo Meireles <gustavo@gsmeira.com>
  * @package GSMeira\LaravelMultiAlerts
  */
-class LaravelMultiAlerts
+class LaravelMultialerts
 {
     /**
      * Type of the alert.
